@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Animon Online</title>
+  <link rel="stylesheet" href="style.css?v=11">
+</head>
+
+<body>
+
+  <h1>🎮 Animon Online</h1>
+
+<section id="multiplayerPanel">
+  <h2>🌐 Multiplayer Room</h2>
+
+  <button onclick="createRoom()">Create Room</button>
+
+  <input id="roomCodeInput" placeholder="Enter Room Code" />
+
+  <button onclick="joinRoom()">Join Room</button>
+
+  <div id="roomStatus">Not connected to room</div>
+
+  <div id="mpLoadingScreen" class="hidden">
+    <div class="mp-loading-card">
+      <h2>⚔️ Preparing Battle...</h2>
+      <p id="mpLoadingText">Syncing players...</p>
+      <div class="mp-loader"></div>
+    </div>
+  </div>
+
+  <div id="multiplayerDraftControls" class="hidden">
+    <button onclick="startMultiplayerDraft()">Start Multiplayer Draft</button>
+
+    <div id="multiplayerDraftActions" class="hidden">
+      <h3>Multiplayer Draft</h3>
+
+      <div id="mpPokemonCard">
+        <h2 id="mpPokeName">---</h2>
+        <img id="mpPokeImage" />
+        <p id="mpPokeStats">---</p>
+        <p id="mpPokeType">---</p>
+      </div>
+
+      <h3>Current Bid: <span id="mpCurrentBid">0</span></h3>
+      <h3 id="mpTurn">Waiting...</h3>
+
+      <button id="mpBid1Btn" onclick="multiplayerBid(1)">Bid +1</button>
+      <button id="mpBid2Btn" onclick="multiplayerBid(2)">Bid +2</button>
+      <button id="mpBid3Btn" onclick="multiplayerBid(3)">Bid +3</button>
+      <button id="mpPassBtn" onclick="multiplayerPass()">Pass</button>
+
+      <div class="mp-teams">
+        <div>
+          <h3>Player 1</h3>
+          <p>Tokens: <span id="mpP1Tokens">20</span></p>
+          <p>Team: <span id="mpP1Count">0</span>/6</p>
+          <div id="mpP1Team"></div>
+        </div>
+
+        <div>
+          <h3>Player 2</h3>
+          <p>Tokens: <span id="mpP2Tokens">20</span></p>
+          <p>Team: <span id="mpP2Count">0</span>/6</p>
+          <div id="mpP2Team"></div>
+        </div>
+      </div>
+
+      <div id="mpStarterSelect" class="hidden"></div>
+
+      <div id="mpBattleBox" class="hidden">
+        <h2>⚔️ Multiplayer Battle</h2>
+
+        <div id="mpArenaBox" class="mp-arena-box"></div>
+        <div id="battleTimer">⏰ 30s</div>
+        <div id="battleAnnouncer"></div>
+
+        <div id="mpArenaStage" class="arena-stage">
+          <div class="arena-bg"></div>
+          <div class="arena-lights"></div>
+          <div class="arena-floor"></div>
+
+          <div class="mp-battle-field arena-content">
+            <div class="mp-fighter">
+              <h3>Your Pokémon</h3>
+              <img id="mpMyPokemonImage" />
+              <h3 id="mpMyPokemonName">---</h3>
+              <p id="mpMyPokemonType">---</p>
+
+              <div class="bar">
+                <div id="mpMyHpBar" class="hp-fill"></div>
+              </div>
+              <p id="mpMyHpText">HP: -- / --</p>
+
+              <div class="bar">
+                <div id="mpMyStaminaBar" class="stamina-fill"></div>
+              </div>
+              <p id="mpMyStaminaText">Stamina: -- / --</p>
+            </div>
+
+            <div class="vs-box">
+              <h2>VS</h2>
+              <p id="mpBattleRound">Round 1</p>
+            </div>
+
+            <div class="mp-fighter">
+              <h3>Enemy Pokémon</h3>
+              <img id="mpEnemyPokemonImage" />
+              <h3 id="mpEnemyPokemonName">---</h3>
+              <p id="mpEnemyPokemonType">---</p>
+
+              <div class="bar">
+                <div id="mpEnemyHpBar" class="hp-fill"></div>
+              </div>
+              <p id="mpEnemyHpText">HP: -- / --</p>
+
+              <div class="bar">
+                <div id="mpEnemyStaminaBar" class="stamina-fill"></div>
+              </div>
+              <p id="mpEnemyStaminaText">Stamina: -- / --</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="mpBattleStatsBox" class="hidden"></div>
+
+        <h3>Your Moves</h3>
+        <div id="mpMovePanel"></div>
+
+        <button id="mpSwitchToggleBtn" onclick="toggleMultiplayerSwitchPanel()">
+          🔄 Switch Pokémon
+        </button>
+
+        <div id="mpSwitchPanel" class="hidden"></div>
+      </div>
+
+      <div id="mpLogBox">
+        <h3>Multiplayer Log</h3>
+        <div id="mpGameLog"></div>
+      </div>
+    </div>
+  </div>
+</section>
+  <section id="draftScreen">
+    <div class="top-buttons">
+      <button onclick="startDraft()">Start Game</button>
+    </div>
+
+    <div id="roomInfo">Room: Single Player AI</div>
+    <div id="turnInfo">Game Ready</div>
+    <div id="enemyComment">Opponent: Waiting...</div>
+
+    <div id="timerBox">⏱️ Timer: <span id="timer">10</span>s</div>
+
+    <div id="pokemonCard">
+      <h2 id="pokeName">---</h2>
+      <img id="pokeImage" width="150" />
+      <p id="pokeStats">---</p>
+      <p id="pokeType">---</p>
+    </div>
+
+    <div id="bidPanel">
+      <h3>Current Bid: <span id="currentBid">0</span></h3>
+
+      <button id="bid1Btn" onclick="bid(1)">Bid +1</button>
+      <button id="bid2Btn" onclick="bid(2)">Bid +2</button>
+      <button id="bid3Btn" onclick="bid(3)">Bid +3</button>
+      <button id="passBtn" onclick="passRound()">Pass</button>
+    </div>
+
+    <div class="inventory-wrap">
+      <div class="inventory">
+        <h2>Your Inventory</h2>
+        <p>Tokens: <span id="playerTokens">20</span></p>
+        <p>Team: <span id="playerCount">0</span>/6</p>
+        <div id="playerTeam"></div>
+      </div>
+
+      <div class="inventory">
+        <h2>Opponent Inventory</h2>
+        <p>Tokens: <span id="enemyTokens">20</span></p>
+        <p>Team: <span id="enemyCount">0</span>/6</p>
+        <div id="enemyTeam"></div>
+      </div>
+    </div>
+
+    <div id="logBox">
+      <h2>Game Log</h2>
+      <div id="gameLog"></div>
+    </div>
+  </section>
+
+  <section id="battleScreen" class="hidden">
+    <div class="battle-header">
+      <h1>⚔️ Battle Arena</h1>
+      <div id="battleStatus">Choose your first Pokémon</div>
+      <div id="roundInfo">Round 1 / 10</div>
+      <div id="roundTimerBox">
+        ⏱️ Move Timer: <span id="roundTimer">20</span>s
+      </div>
+      <div id="winnerBox" class="hidden"></div>
+    </div>
+
+    <div id="arenaPanel">
+      <div>
+        <h2 id="arenaName">Arena: ---</h2>
+        <p id="arenaDescription">Arena effects will appear here.</p>
+      </div>
+
+      <div id="arenaEffectsBox">
+        <h3>Arena Effects</h3>
+        <ul id="arenaEffects"></ul>
+      </div>
+    </div>
+
+    <div id="battleSelectionPanel">
+      <h2>Choose Your Starting Pokémon</h2>
+      <div id="battleTeamSelect"></div>
+    </div>
+
+    <div id="battleField" class="hidden">
+      <div class="fighter-card">
+        <h2>Your Pokémon</h2>
+        <h3 id="playerActiveName">---</h3>
+        <img id="playerActiveImage" />
+        <p id="playerActiveType">Type: ---</p>
+
+        <div id="playerBattleStats"></div>
+
+        <div class="bar-label">HP</div>
+        <div class="bar">
+          <div id="playerHPBar" class="hp-fill"></div>
+        </div>
+        <p id="playerHPText">HP: -- / --</p>
+
+        <div class="bar-label">Stamina</div>
+        <div class="bar">
+          <div id="playerStaminaBar" class="stamina-fill"></div>
+        </div>
+        <p id="playerStaminaText">Stamina: 100 / 100</p>
+      </div>
+
+      <div class="vs-box">
+        <h2>VS</h2>
+        <p>Choose 1 action per round</p>
+        <p>Switching counts as your move</p>
+      </div>
+
+      <div class="fighter-card">
+        <h2>Enemy Pokémon</h2>
+        <h3 id="enemyActiveName">---</h3>
+        <img id="enemyActiveImage" />
+        <p id="enemyActiveType">Type: ---</p>
+
+        <div id="enemyBattleStats"></div>
+
+        <div class="bar-label">HP</div>
+        <div class="bar">
+          <div id="enemyHPBar" class="hp-fill"></div>
+        </div>
+        <p id="enemyHPText">HP: -- / --</p>
+
+        <div class="bar-label">Stamina</div>
+        <div class="bar">
+          <div id="enemyStaminaBar" class="stamina-fill"></div>
+        </div>
+        <p id="enemyStaminaText">Stamina: 100 / 100</p>
+      </div>
+    </div>
+
+    <div id="movePanelWrap">
+      <h2>Your Moves</h2>
+      <div id="movePanel"></div>
+    </div>
+
+    <div id="switchPanelWrap">
+      <h2>Switch Pokémon</h2>
+      <p>Switching uses your action for the round.</p>
+      <div id="switchPanel"></div>
+    </div>
+
+    <div id="battleLogBox">
+      <h2>Battle Log</h2>
+      <div id="battleLog"></div>
+    </div>
+  </section>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="app.js?v=12"></script>
+</body>
+</html>
