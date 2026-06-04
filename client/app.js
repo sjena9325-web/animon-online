@@ -112,10 +112,33 @@ socket.on("multiplayerGameUpdate", data => {
   multiplayerRoom = data.roomCode;
   multiplayerGame = data.game;
 
-  const draftScreen = document.getElementById("draftScreen");
-  const battleScreen = document.getElementById("battleScreen");
-  const multiplayerDraftControls = document.getElementById("multiplayerDraftControls");
-  const multiplayerDraftActions = document.getElementById("multiplayerDraftActions");
+  if (data.roomCode) {
+    localStorage.setItem("animonRoom", data.roomCode);
+  }
+
+  if (
+    data.game &&
+    (
+      data.game.phase === "draft" ||
+      data.game.phase === "battle-ready" ||
+      data.game.phase === "battle" ||
+      data.game.phase === "pokemon-fainted"
+    )
+  ) {
+    localStorage.setItem("animonShouldReconnect", "true");
+  }
+
+  const draftScreen =
+    document.getElementById("draftScreen");
+
+  const battleScreen =
+    document.getElementById("battleScreen");
+
+  const multiplayerDraftControls =
+    document.getElementById("multiplayerDraftControls");
+
+  const multiplayerDraftActions =
+    document.getElementById("multiplayerDraftActions");
 
   if (draftScreen) draftScreen.classList.add("hidden");
   if (battleScreen) battleScreen.classList.add("hidden");
@@ -123,6 +146,7 @@ socket.on("multiplayerGameUpdate", data => {
   if (multiplayerDraftActions) multiplayerDraftActions.classList.remove("hidden");
 
   renderMultiplayerDraft();
+
   hideMultiplayerLoading();
 });
 
@@ -132,26 +156,36 @@ socket.on("roomError", data => {
     "No reconnectable game found"
   ];
 
+  const isInActiveGame =
+    multiplayerGame &&
+    (
+      multiplayerGame.phase === "draft" ||
+      multiplayerGame.phase === "battle-ready" ||
+      multiplayerGame.phase === "battle" ||
+      multiplayerGame.phase === "pokemon-fainted"
+    );
+
   if (reconnectErrors.includes(data.message)) {
-    localStorage.removeItem("animonRoom");
-    localStorage.removeItem("animonRole");
-    localStorage.removeItem("animonReconnectToken");
-    localStorage.removeItem("animonShouldReconnect");
+    if (!isInActiveGame) {
+      localStorage.removeItem("animonRoom");
+      localStorage.removeItem("animonRole");
+      localStorage.removeItem("animonReconnectToken");
+      localStorage.removeItem("animonShouldReconnect");
 
-    multiplayerRoom = null;
-    multiplayerRole = null;
-    multiplayerGame = null;
+      multiplayerRoom = null;
+      multiplayerRole = null;
+      multiplayerGame = null;
 
-    hideMultiplayerLoading();
+      const roomStatus =
+        document.getElementById("roomStatus");
 
-    const roomStatus =
-      document.getElementById("roomStatus");
-
-    if (roomStatus) {
-      roomStatus.innerText =
-        "Not connected to room";
+      if (roomStatus) {
+        roomStatus.innerText =
+          "Not connected to room";
+      }
     }
 
+    hideMultiplayerLoading();
     return;
   }
 
@@ -288,10 +322,19 @@ function multiplayerPass() {
   socket.emit("multiplayerPass", activeRoom);
 }
 function getActiveMultiplayerRoom() {
-  return (
-    multiplayerRoom ||
-    localStorage.getItem("animonRoom")
-  );
+  const savedRoom =
+    localStorage.getItem("animonRoom");
+
+  if (multiplayerRoom) {
+    return multiplayerRoom;
+  }
+
+  if (savedRoom) {
+    multiplayerRoom = savedRoom;
+    return savedRoom;
+  }
+
+  return null;
 }
 function renderMultiplayerDraft() {
   if (!multiplayerGame) return;
