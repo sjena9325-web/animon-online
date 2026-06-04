@@ -1990,3 +1990,47 @@ function setBackground(type) {
 
   document.body.setAttribute("data-doodles", selectedDoodles);
 }
+function showOnlyScreen(screenId) {
+  const screens = [
+    "homeDashboard",
+    "multiplayerPanel",
+    "draftScreen",
+    "battleScreen"
+  ];
+
+  screens.forEach(id => {
+    const element = document.getElementById(id);
+
+    if (!element) return;
+
+    if (id === screenId) {
+      element.classList.remove("hidden");
+    } else {
+      element.classList.add("hidden");
+    }
+  });
+}
+
+function openHome() {
+  showOnlyScreen("homeDashboard");
+}
+
+function openAiMode() {
+  showOnlyScreen("draftScreen");
+}
+
+function openPvpMode() {
+  showOnlyScreen("multiplayerPanel");
+}
+
+function toggleHomeMenu() {
+  const menu = document.getElementById("homeMenu");
+
+  if (!menu) return;
+
+  menu.classList.toggle("hidden");
+}
+
+function openAnipediaPreview() {
+  alert("Anipedia will be added in Beta 0.1");
+}

@@ -1,18 +1,112 @@
 <!DOCTYPE html>
-<html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Animon Online</title>
 
-  <link rel="stylesheet" href="/style.css?v=15" />
+  <link rel="stylesheet" href="/style.css?v=16" />
 </head>
 <body>
 
   <h1>🎮 Animon Online</h1>
+<section id="homeDashboard">
+  <div class="home-top-bar">
+    <div class="player-profile-card">
+      <div class="profile-avatar">🧑‍🚀</div>
+      <div>
+        <h3 id="homePlayerName">Player123</h3>
+        <p>Level <span id="homePlayerLevel">1</span></p>
+        <div class="xp-bar">
+          <div id="homeXpFill"></div>
+        </div>
+      </div>
+    </div>
 
-<section id="multiplayerPanel">
+    <div class="currency-box">
+      <span>💎 <b>0</b></span>
+      <span>🪙 <b>0</b></span>
+    </div>
+
+    <button class="three-dot-btn" onclick="toggleHomeMenu()">⋮</button>
+
+    <div id="homeMenu" class="home-menu hidden">
+      <button>⚙️ Settings</button>
+      <button>🎒 Inventory</button>
+      <button>🏆 Leaderboard</button>
+      <button>🔊 Sound</button>
+    </div>
+  </div>
+
+  <div class="home-logo-box">
+    <h1 class="home-logo">ANIMON</h1>
+    <p>Battle. Train. Evolve.</p>
+  </div>
+
+  <div class="ai-battle-box">
+    <div class="ai-side player-side">
+      <h4>Your Animon</h4>
+      <div class="home-animon-placeholder blue-glow">🐺</div>
+      <h3>Neurofang</h3>
+      <p>Lv. 24</p>
+    </div>
+
+    <div class="home-vs">
+      <h2>VS</h2>
+      <button onclick="openAiMode()">Start AI Battle</button>
+    </div>
+
+    <div class="ai-side enemy-side">
+      <h4>AI Opponent</h4>
+      <div class="home-animon-placeholder red-glow">🐉</div>
+      <h3>Inferox</h3>
+      <p>Lv. 22</p>
+    </div>
+  </div>
+
+  <div class="home-grid">
+    <div class="home-card anipedia-card" onclick="openAnipediaPreview()">
+      <h2>📖 Anipedia</h2>
+      <p>Discover your Animons, types, stats, and Ani Cards.</p>
+      <button>Discover</button>
+    </div>
+
+    <div class="home-card quick-action-card">
+      <h2>⚡ Quick Action</h2>
+      <div class="quick-buttons">
+        <button onclick="openAiMode()">AI Battle</button>
+        <button onclick="openPvpMode()">PvP Room</button>
+        <button>Rewards</button>
+      </div>
+    </div>
+
+    <div class="home-card trending-card">
+      <h2>🔥 Trending Animons</h2>
+      <div class="mini-animon-row">
+        <div>Voidra</div>
+        <div>Flarex</div>
+        <div>Aquaris</div>
+      </div>
+    </div>
+
+    <div class="home-card recent-card">
+      <h2>⚔️ Recent Battles</h2>
+      <p>No battles yet.</p>
+    </div>
+
+    <div class="home-card news-card">
+      <h2>🧪 New Types Released</h2>
+      <p>Cyber, Aether, Shadow, and Plasma types coming soon.</p>
+    </div>
+
+    <div class="home-card facts-card">
+      <h2>📰 Animon News & Facts</h2>
+      <p>Some Animons evolve differently depending on battle style.</p>
+    </div>
+  </div>
+</section>
+
+<section id="multiplayerPanel" class="hidden">
   <h2>🌐 Multiplayer Room</h2>
 
   <button onclick="createRoom()">Create Room</button>
@@ -143,7 +237,7 @@
     </div>
   </div>
 </section>
-  <section id="draftScreen">
+  <section id="draftScreen" class="hidden">
     <div class="top-buttons">
       <button onclick="startDraft()">Start Game</button>
     </div>
@@ -288,6 +382,6 @@
   </section>
 
 <script src="/socket.io/socket.io.js"></script>
-<script src="/app.js?v=15"></script>
+<script src="/app.js?v=16"></script>
 </body>
 </html>
