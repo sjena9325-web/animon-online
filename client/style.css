@@ -1414,3 +1414,148 @@ body {
   opacity: 0.45;
   filter: grayscale(0.8);
 }
+@media (max-width: 768px) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  button {
+    width: 92%;
+    max-width: 320px;
+    min-height: 48px;
+    font-size: 16px;
+    display: block;
+    margin: 8px auto;
+  }
+
+  #multiplayerPanel {
+    width: 94vw;
+    max-width: 94vw;
+    padding: 14px;
+    box-sizing: border-box;
+  }
+
+  #multiplayerPanel input {
+    width: 92%;
+    max-width: 320px;
+    display: block;
+    margin: 8px auto;
+    box-sizing: border-box;
+  }
+
+  #mpPokemonCard {
+    width: 92%;
+    max-width: 330px;
+    box-sizing: border-box;
+  }
+
+  #mpPokemonCard img {
+    width: 145px;
+    min-height: 145px;
+  }
+
+  .mp-teams {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mp-teams > div {
+    width: 92%;
+    max-width: 340px;
+    box-sizing: border-box;
+  }
+
+  #mpStarterSelect {
+    grid-template-columns: 1fr;
+    width: 94%;
+    max-width: 340px;
+  }
+
+  #mpBattleBox {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .arena-stage {
+    width: 94vw;
+    max-width: 94vw;
+    height: auto;
+    overflow: hidden;
+  }
+
+  .mp-battle-field,
+  .arena-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 8px;
+  }
+
+  .mp-fighter {
+    width: 92%;
+    max-width: 330px;
+    min-height: auto;
+    box-sizing: border-box;
+  }
+
+  .mp-fighter img {
+    width: 125px;
+    height: 125px;
+    object-fit: contain;
+  }
+
+  .vs-box {
+    width: 115px;
+    min-height: 105px;
+  }
+
+  .vs-box h2 {
+    font-size: 36px;
+  }
+
+  #mpMovePanel {
+    width: 94%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin: 0 auto;
+  }
+
+  .mp-move-card {
+    width: 100%;
+    min-height: 110px;
+    box-sizing: border-box;
+  }
+
+  #mpSwitchPanel {
+    width: 94%;
+    margin: 12px auto;
+  }
+
+  .mp-switch-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #mpLogBox {
+    width: 94%;
+    max-width: 94%;
+  }
+
+  #mpGameLog {
+    max-height: 220px;
+    font-size: 13px;
+  }
+}
